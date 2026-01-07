@@ -1,0 +1,13 @@
+# Sanal Ortam
+venv/
+env/
+
+# Python Cache
+__pycache__/
+*.pyc
+
+# Veri Setleri (Büyük dosyalar)
+data/*.csv
+
+# Mac OS gereksiz dosyaları
+.DS_Store
