@@ -63,3 +63,5 @@ Sistem Önerisi:
 3. Batman Returns
 4. Batman & Robin
 5. Batman Forever
+<img width="969" height="991" alt="Ekran Resmi 2026-01-07 21 48 41" src="https://github.com/user-attachments/assets/4c17b81c-fcbc-4094-91ea-636f221730a1" />
+
