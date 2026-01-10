@@ -2,51 +2,51 @@ import streamlit as st
 from src.data_loader import DataLoader
 from src.recommender import MovieRecommender
 
-# Sayfa Ayarları
-st.set_page_config(page_title="Film Öneri Sistemi", layout="centered")
+# Page Settings
+st.set_page_config(page_title="Movie Recommendation System", layout="centered")
 
-# --- BAŞLIK KISMI ---
-st.title("🎬 Film Öneri Sistemi")
-st.write("Sevdiğin bir filmi seç, yapay zeka sana benzerlerini önersin.")
+# --- HEADER SECTION ---
+st.title("🎬 Movie Recommendation System")
+st.write("Choose a movie you like, and AI will suggest similar ones.")
 
 
-# --- MODELİ HAZIRLAMA (HIZLANDIRICI İLE) ---
-# st.cache_resource: Modeli her seferinde tekrar eğitmemesi için hafızada tutar.
-# Böylece site donmaz, hızlı çalışır.
+# --- PREPARE MODEL (WITH CACHE) ---
+# st.cache_resource: Keeps the model in memory to avoid retraining every time.
+# So the site runs fast and doesn't freeze.
 @st.cache_resource
 def get_model():
-    # Verileri yükle
+    # Load data
     loader = DataLoader('data/tmdb_5000_movies.csv', 'data/tmdb_5000_credits.csv')
     df = loader.load_data()
 
-    # Modeli kur ve eğit
+    # Build and train the model
     recommender = MovieRecommender(df)
     recommender.prepare_data()
     recommender.build_model()
     return recommender
 
 
-# Yükleniyor yazısı gösterelim
-with st.spinner('Yapay zeka modelleri yükleniyor...'):
+# Show a loading message
+with st.spinner('Loading AI models...'):
     model = get_model()
 
-# --- ARAYÜZ (KULLANICI ETKİLEŞİMİ) ---
+# --- INTERFACE (USER INTERACTION) ---
 
-# 1. Kullanıcıdan Film Seçmesini İste
+# 1. Ask User to Select a Movie
 film_listesi = model.df['title'].values
-secilen_film = st.selectbox("Bir film seçin veya yazın:", film_listesi)
+secilen_film = st.selectbox("Select or type a movie:", film_listesi)
 
-# 2. Butona Basılınca Öneri Yap
-if st.button("Öneri Yap"):
+# 2. Make Recommendation When Button Clicked
+if st.button("Recommend"):
     try:
-        # Senin yazdığın recommend fonksiyonunu kullanıyoruz
+        # Using the recommend function you wrote
         oneriler = model.recommend(secilen_film)
 
-        st.success(f"'{secilen_film}' filmini sevenler bunları da sevdi:")
+        st.success(f"People who liked '{secilen_film}' also liked these:")
 
-        # Sonuçları ekrana yazdır
+        # Print results to screen
         for film in oneriler:
             st.write(f"👉 {film}")
 
     except Exception as e:
-        st.error(f"Bir hata oluştu: {e}")
+        st.error(f"An error occurred: {e}")
