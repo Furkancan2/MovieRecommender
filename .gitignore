@@ -1,4 +1,4 @@
-# Sanal Ortam
+# virtual environment
 venv/
 env/
 
@@ -6,8 +6,8 @@ env/
 __pycache__/
 *.pyc
 
-# Veri Setleri (Büyük dosyalar)
+# datasets
 data/*.csv
 
-# Mac OS gereksiz dosyaları
+# Mac OS junk files
 .DS_Store
