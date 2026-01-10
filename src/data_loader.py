@@ -1,58 +1,57 @@
 import pandas as pd
 import os
 
-
 class DataLoader:
     def __init__(self, movies_path, credits_path):
-        # Dosya yollarını sınıfın hafızasına atıyoruz
+        # Save file paths to the class
         self.movies_path = movies_path
         self.credits_path = credits_path
 
     def load_data(self):
         """
-        CSV dosyalarını okur, birleştirir ve temizler.
-        Döndürdüğü değer: Temizlenmiş Pandas DataFrame
+        Reads, merges, and cleans CSV files.
+        Returns: Cleaned Pandas DataFrame
         """
-        print("Veriler yükleniyor...")
+        print("Loading data...")
 
-        # 1. Dosyaların var olup olmadığını kontrol et (Hata yönetimi)
+        # 1. Check if files exist (Error handling)
         if not os.path.exists(self.movies_path):
-            raise FileNotFoundError(f"Dosya bulunamadı: {self.movies_path}")
+            raise FileNotFoundError(f"File not found: {self.movies_path}")
         if not os.path.exists(self.credits_path):
-            raise FileNotFoundError(f"Dosya bulunamadı: {self.credits_path}")
+            raise FileNotFoundError(f"File not found: {self.credits_path}")
 
-        # 2. CSV dosyalarını oku
+        # 2. Read CSV files
         movies = pd.read_csv(self.movies_path)
         credits = pd.read_csv(self.credits_path)
 
-        print(f"Movies tablosu boyutu: {movies.shape}")
-        print(f"Credits tablosu boyutu: {credits.shape}")
+        print(f"Movies table size: {movies.shape}")
+        print(f"Credits table size: {credits.shape}")
 
-        # 3. İki tabloyu birleştir (Merge)
-        # movies tablosundaki 'title' ile credits tablosundaki 'title' eşleşince satırları birleştir.
+        # 3. Merge the two tables
+        # Merge rows when 'title' in movies matches 'title' in credits
         movies = movies.merge(credits, on='title')
 
-        # 4. Sadece işimize yarayacak sütunları seç
-        # id, başlık, özet, türler, anahtar kelimeler, oyuncular, ekip
+        # 4. Select only useful columns
+        # id, title, overview, genres, keywords, cast, crew
         movies = movies[['movie_id', 'title', 'overview', 'genres', 'keywords', 'cast', 'crew']]
 
-        # 5. Eksik verileri (NaN) temizle
-        # Özeti veya başlığı olmayan filmleri tablodan atıyoruz.
+        # 5. Clean missing data (NaN)
+        # Drop movies without an overview or title
         movies.dropna(inplace=True)
 
-        print(f"Birleştirme ve temizleme sonrası boyut: {movies.shape}")
+        print(f"Size after merging and cleaning: {movies.shape}")
         return movies
 
 
-# Bu dosya tek başına çalıştırılırsa test amaçlı burası çalışır
+# If this file runs alone, this part runs for testing
 if __name__ == "__main__":
-    # Dosya yollarını vererek sınıfı başlatıyoruz
-    # ../data/ diyerek bir üst klasöre çıkıp data klasörüne giriyoruz
+    # Start the class with file paths
+    # Use ../data/ to go up one folder and enter data folder
     loader = DataLoader('../data/tmdb_5000_movies.csv', '../data/tmdb_5000_credits.csv')
 
     try:
         df = loader.load_data()
-        print("\nİlk 5 film örneği:")
-        print(df[['title', 'overview']].head())  # Sadece başlık ve özeti göster
+        print("\nFirst 5 movie examples:")
+        print(df[['title', 'overview']].head())  # Show only title and overview
     except Exception as e:
-        print(f"Bir hata oluştu: {e}")
+        print(f"An error occurred: {e}")
