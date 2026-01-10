@@ -1,67 +1,65 @@
 [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://movie-ai-project.streamlit.app/)
 
-> **🔴 Canlı Demo:** [Projeyi denemek için tıklayın](https://movie-ai-project.streamlit.app/)
+> **🔴 Live Demo:** [Click to try the project](https://movie-ai-project.streamlit.app/)
 
 # 🎬 Movie Recommendation System
 
-Bu proje, Makine Öğrenmesi (Machine Learning) ve Doğal Dil İşleme (NLP) teknikleri kullanılarak geliştirilmiş, **İçerik Tabanlı (Content-Based)** bir film öneri sistemidir.
+This project is a **Content-Based** movie recommendation system developed using Machine Learning and Natural Language Processing (NLP) techniques.
 
-Kullanıcı bir film ismi girdiğinde, sistem filmin **özeti, türü, oyuncu kadrosu ve yönetmeni** arasındaki anlamsal benzerlikleri analiz eder ve en uygun 5 filmi önerir.
+When the user enters a movie title, the system analyzes the semantic similarities between the movie's **overview, genre, cast, and director** and suggests the top 5 most suitable movies.
 
-## 🛠 Kullanılan Teknolojiler
+## 🛠 Technologies Used
 
 * **Python 3.x**
-* **Streamlit:** Web arayüzü ve deployment için.
-* **Pandas:** Veri manipülasyonu ve temizliği için.
-* **Scikit-Learn:** `CountVectorizer` ve `Cosine Similarity` algoritmaları için.
-* **Numpy:** Vektörel hesaplamalar için.
+* **Streamlit:** For web interface and deployment.
+* **Pandas:** For data manipulation and cleaning.
+* **Scikit-Learn:** For `CountVectorizer` and `Cosine Similarity` algorithms.
+* **Numpy:** For vector calculations.
 
-## 📂 Proje Yapısı
+## 📂 Project Structure
 
-* `src/data_loader.py`: Ham veriyi (CSV) yükler, birleştirir ve temizler.
-* `src/recommender.py`: Metin işleme (NLP) ve benzerlik matrisi hesaplamalarını yapar.
-* `app.py`: Streamlit tabanlı web arayüz kodları.
-* `main.py`: Terminal üzerinden çalıştırmak için ana dosya.
+* `src/data_loader.py`: Loads, merges, and cleans raw data (CSV).
+* `src/recommender.py`: Handles text processing (NLP) and similarity matrix calculations.
+* `app.py`: Streamlit-based web interface codes.
+* `main.py`: Main file to run via terminal.
 
-## 🚀 Kurulum ve Çalıştırma
+## 🚀 Installation and Usage
 
-Kendi bilgisayarınızda çalıştırmak isterseniz:
+If you want to run it on your own computer:
 
-1.  **Repoyu Klonlayın:**
+1.  **Clone the Repository:**
     ```bash
     git clone [https://github.com/Furkancan2/MovieRecommender.git](https://github.com/Furkancan2/MovieRecommender.git)
     cd MovieRecommender
     ```
 
-2.  **Sanal Ortamı Kurun ve Aktif Edin:**
+2.  **Set Up and Activate Virtual Environment:**
     ```bash
     python3 -m venv venv
     source venv/bin/activate
     ```
 
-3.  **Gereksinimleri Yükleyin:**
+3.  **Install Requirements:**
     ```bash
     pip install -r requirements.txt
     ```
 
-4.  **Veri Setini Hazırlayın:**
-    * [TMDB 5000 Movie Dataset](https://www.kaggle.com/datasets/tmdb/tmdb-movie-metadata) adresinden veri setini indirin.
-    * `tmdb_5000_movies.csv` ve `tmdb_5000_credits.csv` dosyalarını `data/` klasörüne atın.
+4.  **Prepare the Dataset:**
+    * Download the dataset from [TMDB 5000 Movie Dataset](https://www.kaggle.com/datasets/tmdb/tmdb-movie-metadata).
+    * Put the `tmdb_5000_movies.csv` and `tmdb_5000_credits.csv` files into the `data/` folder.
 
-5.  **Arayüzü Başlatın:**
+5.  **Start the Interface:**
     ```bash
     streamlit run app.py
     ```
 
-## 📊 Örnek Senaryo
+## 📊 Example Scenario
 
 ```text
-Giriş: The Dark Knight
-Sistem Önerisi:
+Input: The Dark Knight
+System Recommendation:
 1. The Dark Knight Rises
 2. Batman Begins
 3. Batman Returns
 4. Batman & Robin
 5. Batman Forever
-
-
