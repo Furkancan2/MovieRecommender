@@ -3,30 +3,30 @@ from src.recommender import MovieRecommender
 
 
 def main():
-    # 1. Veriyi Yükle
-    print("--- ADIM 1: Veri Yükleniyor ---")
-    # Dosya yollarına dikkat: main.py ana klasörde olduğu için data/ klasörüne direkt erişir.
+    # 1. Load Data
+    print("--- STEP 1: Loading Data ---")
+    # Note on file paths: since main.py is in the main folder, it accesses data/ directly.
     loader = DataLoader('data/tmdb_5000_movies.csv', 'data/tmdb_5000_credits.csv')
     df = loader.load_data()
 
-    # 2. Modeli Hazırla
-    print("\n--- ADIM 2: Model Hazırlanıyor ---")
+    # 2. Prepare Model
+    print("\n--- STEP 2: Preparing Model ---")
     recommender = MovieRecommender(df)
-    recommender.prepare_data()  # Temizlik
-    recommender.build_model()  # Matematik/Vektör
+    recommender.prepare_data()  # Cleaning
+    recommender.build_model()  # Math/Vector
 
-    # 3. Kullanıcıdan Film İsteme ve Öneri Yapma
-    print("\n--- SİSTEM HAZIR ---")
+    # 3. Ask User for Movie and Make Recommendations
+    print("\n--- SYSTEM READY ---")
     while True:
-        user_input = input("\nBir film ismi girin (Çıkmak için 'q'): ")
+        user_input = input("\nEnter a movie name (Press 'q' to exit): ")
 
         if user_input.lower() == 'q':
-            print("Güle güle!")
+            print("Goodbye!")
             break
 
         recommendations = recommender.recommend(user_input)
 
-        print(f"\n'{user_input}' filmini sevenler bunları da sevdi:")
+        print(f"\nPeople who liked '{user_input}' also liked these:")
         for movie in recommendations:
             print(f"- {movie}")
 
